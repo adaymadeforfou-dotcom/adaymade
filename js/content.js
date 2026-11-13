@@ -31,7 +31,8 @@ window.CONTENT = {
     eyebrow: "A Day Made for You presents",
     title: "Some days deserve",
     em: "a little more attention.",
-    sub: "This one is yours.",
+    // sub: "This one is yours.", 
+    sub: "Il fallait apprendre l'anglais hein mon frère ahhh",
     button: "Entrer dans le souvenir",
     audio: "assets/audio/intro"
   },
@@ -103,7 +104,7 @@ window.CONTENT = {
 
     ],
     eyebrow: "Pour toi, aujourd'hui",
-    date: "05 novembre 2026",
+    date: "14 novembre 2026",
     postmark: "avec amour",
     ps: "P.S. Garde un peu de place pour la suite, il reste des surprises.",
     signature: "Tryphene", stamp: "made with love",
@@ -124,40 +125,40 @@ window.CONTENT = {
     title: "Quelques chaînes, rien que pour toi",
     hint: "Allume la télé.",
     slides: [
-      { text: "GRrrrrrrr", caption: "Bienvenue." },
-      { text: "Ce sourire illumine ma journée. Ton bonheur est contagieux !", caption: "Bienvenue." },
-      { image: "assets/img/01 (1).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+      { text: "GRrrrrrrr" },
+      { text: "Ce sourire illumine ma journée. Ton bonheur est contagieux !" },
+      { image: "assets/img/01 (1).jpeg", alt: "Souvenir 1" },
       
 
-      { text: "Avec toi, chaque instant c'est une nouvelle aventure presque. Je t'aime !", caption: "Bienvenue." },
-      { image: "assets/img/01 (2).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+      { text: "Avec toi, chaque instant c'est une nouvelle aventure presque. Je t'aime !" },
+      { image: "assets/img/01 (2).jpeg", alt: "Souvenir 1" },
       
 
-      { text: "Dans tes bras, je me sens en sécurité et aimée.", caption: "Bienvenue." },
-      { image: "assets/img/01 (3).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+      { text: "Dans tes bras, je me sens en sécurité et aimée." },
+      { image: "assets/img/01 (3).jpeg", alt: "Souvenir 1" },
 
-      { text: "À tes côtés, la vie est plus belle. Tu es la personne que je veux voir chaque jour.", caption: "Bienvenue." },
-      { image: "assets/img/01 (4).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+      { text: "À tes côtés, la vie est plus belle. Tu es la personne que je veux voir chaque jour." },
+      { image: "assets/img/01 (4).jpeg", alt: "Souvenir 1" },
 
-      { text: "Ton regard sur moi me fait fondre. Je suis folle de toi.", caption: "Bienvenue." },
-      { image: "assets/img/01 (5).jpeg", alt: "Souvenir 5", caption: "Bienvenue" },
+      { text: "Ton regard sur moi me fait fondre. Je suis folle de toi." },
+      { image: "assets/img/01 (5).jpeg", alt: "Souvenir 5" },
 
-      { text: "Ton énergie me captive. Je ne me lasse jamais d'être avec toi.", caption: "Bienvenue." },
-      { image: "assets/img/01 (6).jpeg", alt: "Souvenir 6", caption: "Bienvenue" },
+      { text: "Ton énergie me captive. Je ne me lasse jamais d'être avec toi." },
+      { image: "assets/img/01 (6).jpeg", alt: "Souvenir 6" },
 
-      { text: "Sous le ciel étoilé ou le soleil radieux, je suis heureuse avec toi.", caption: "Bienvenue." },
-      { image: "assets/img/01 (7).jpeg", alt: "Souvenir 7", caption: "Bienvenue" },
+      { text: "Sous le ciel étoilé ou le soleil radieux, je suis heureuse avec toi." },
+      { image: "assets/img/01 (7).jpeg", alt: "Souvenir 7" },
 
-      // { text: "Toujours aussi complices ! Ton humour me fait toujours sourire.", caption: "Bienvenue." },
-      // { image: "assets/img/01 (9).jpeg", alt: "Souvenir 8", caption: "Bienvenue" },
+     { text: "Toujours aussi complices ! Ton humour me fait toujours sourire." },
+     { image: "assets/img/plus1.jpeg", alt: "Souvenir 8" },
 
-      // { text: "Notre amour est une fête de tous les jours. Je suis si chanceuse de t'avoir.", caption: "Bienvenue." },
-      // { image: "assets/img/01 (10).jpeg", alt: "Souvenir 9", caption: "Bienvenue" },
+     { text: "On fait toujours les photos comme frère et sœur." },
+     { image: "assets/img/01 (10).jpeg", alt: "Souvenir 9" },
 
-      { text: "Ensemble, nous formons une équipe imbattable. Prêts à affronter le monde ?", caption: "Bienvenue." },
-      { image: "assets/img/01 (11).jpeg", alt: "Souvenir 10", caption: "Bienvenue" },
+      { text: "Ensemble, on forme une équipe pas trop mal." },
+      { image: "assets/img/plus.jpeg", alt: "Souvenir 10" },
 
-      // { image: "assets/img/tv-1.jpg", alt: "Souvenir 1", caption: "Bienvenue" },
+      // { image: "assets/img/tv-1.jpg", alt: "Souvenir 1" },
       // { image: "assets/img/tv-2.jpg", alt: "Souvenir 2", caption: "Légende du deuxième souvenir" },
       // { text: "Tu me manques même quand tu es là.", caption: "Chaîne 4" }
     ]
@@ -186,18 +187,27 @@ window.CONTENT = {
         src: "assets/img/disque-3.jpg", alt: "trop cute", tag: "souviens-toi",
         title: "ça coulait biennn hein", anecdote: "Ce jour-là, lors du déballage des cadeaux, tu as pleuré comme un bébé parce que je t'avais offert ce cadeau en particulier, tellement significatif pour toi. C'était un de mes moments préféré où un peu de place à plus d'émotion pure et à des larmes impossibles à retenir.'."
       },
+
       {
-        src: "assets/img/disque-4.jpg", alt: "Photo du disque 4", tag: "juste toi",
-        title: "Titre du souvenir 4", anecdote: "Un détail que personne d'autre ne connaît."
+        src: "assets/img/plus3.jpeg", alt: "trop cute", tag: "3eme",
+        title: "vraiment trop mignon", anecdote: "3ème jour de relation et premier jour à notre plage privée 😂❤️"
       },
       {
-        src: "assets/img/disque-5.jpg", alt: "Photo du disque 5", tag: "devine",
-        title: "Titre du souvenir 5", anecdote: "Celui-là me fait toujours sourire."
+        src: "assets/img/plus5.jpeg", alt: "trop cute", tag: "Petit coquin",
+        title: "le chasseur et la proie", anecdote: " à ce moment , je te regardais avec un regard d’ami mais toi apparemment c’était déjà autre chose 😂"
       },
-      {
-        src: "assets/img/disque-6.jpg", alt: "Photo du disque 6", tag: "le dernier",
-        title: "Titre du souvenir 6", anecdote: "Et la suite reste à écrire, ensemble."
-      }
+      // {
+      //   src: "assets/img/disque-4.jpg", alt: "Photo du disque 4", tag: "juste toi",
+      //   title: "Titre du souvenir 4", anecdote: "Un détail que personne d'autre ne connaît."
+      // },
+      // {
+      //   src: "assets/img/disque-5.jpg", alt: "Photo du disque 5", tag: "devine",
+      //   title: "Titre du souvenir 5", anecdote: "Celui-là me fait toujours sourire."
+      // },
+      // {
+      //   src: "assets/img/disque-6.jpg", alt: "Photo du disque 6", tag: "le dernier",
+      //   title: "Titre du souvenir 6", anecdote: "Et la suite reste à écrire, ensemble."
+      // }
     ]
   },
 
@@ -210,7 +220,7 @@ window.CONTENT = {
   day: {
     title: { pre: "Programme de", em: "la journée" },
     sub: "Touche un point sur la carte.",
-    note: "Les horaires sont provisoires.",
+    note: "Les horaires sont provisoires, tu connais le gabonais non ?",
     provisional: "horaire provisoire",
     step: "Étape {n} sur {m}",
     start: "Commence ici",
