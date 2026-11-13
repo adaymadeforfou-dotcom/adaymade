@@ -124,6 +124,7 @@ window.CONTENT = {
     title: "Quelques chaînes, rien que pour toi",
     hint: "Allume la télé.",
     slides: [
+      { image: "assets/img/tv-1.jpg", alt: "Souvenir 1", caption: "Légende du premier souvenir" },
       { text: "Chaîne 1", caption: "Bienvenue." },
       { image: "assets/img/tv-1.jpg", alt: "Souvenir 1", caption: "Légende du premier souvenir" },
       { image: "assets/img/tv-2.jpg", alt: "Souvenir 2", caption: "Légende du deuxième souvenir" },
