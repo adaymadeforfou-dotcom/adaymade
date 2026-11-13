@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Day Made for You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Caveat:wght@500;600&family=Hanken+Grotesk:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Mono&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><radialGradient id="wax" cx=".4" cy=".3"><stop offset="0" stop-color="#b52626"/><stop offset="1" stop-color="#6f0e0e"/></radialGradient>
+<symbol id="heart" viewBox="0 0 40 36"><path d="M20 33 C4 22 1 13 6 7 c4-4 11-3 14 3 c3-6 10-7 14-3 c5 6 2 15-14 26z" fill="url(#wax)"/><path d="M20 30 C7 21 4 14 8 9 c3-3 9-2 12 3 c3-5 9-6 12-3 c4 5 1 12-12 18z" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1"/><ellipse cx="11.5" cy="10" rx="4" ry="2" fill="rgba(255,255,255,.38)" transform="rotate(-32 11.5 10)"/></symbol></defs></svg>
+
+<div id="site" inert>
+  <header class="nav" data-t="site.name"></header>
+
+  <section id="hero">
+    <h1 id="heroPhrase"></h1>
+    <figure class="tv" data-tv="hero"></figure>
+    <footer class="corners">
+      <span class="sans" data-t="site.from"></span>
+      <button id="next" class="link" data-go="#lettre" data-t="hero.next"></button>
+      <span class="sans" data-t="site.year"></span>
+    </footer>
+  </section>
+
+  <section id="lettre">
+    <p class="hint" data-t="letter.hint"></p>
+    <button id="envelope" class="env" aria-haspopup="dialog">
+      <img class="env-img" id="envImg" alt="">
+      <span class="env-in"></span>
+      <span class="env-flap"><i class="f"></i><i class="b"></i></span>
+      <span class="seal" id="seal"><i></i><i></i></span>
+      <span class="sr" data-t="letter.envelopeLabel"></span>
+    </button>
+    <button class="link skip light" data-go="#room" data-t="nav.next"></button>
+  </section>
+
+  <section id="room" class="room">
+    <p class="room-title script" data-t="room.title"></p>
+    <figure class="tv big" data-tv="room"></figure>
+    <p class="room-hint" id="roomHint" data-t="room.hint"></p>
+    <button class="link skip light" data-go="#album" data-t="nav.next"></button>
+  </section>
+
+  <section id="album">
+    <div class="frame">
+      <i class="star s1"></i><i class="star s2"></i>
+      <h2 id="albTitle"></h2>
+      <div class="track" id="albTrack" tabindex="0"><div class="reel" id="albReel"></div></div>
+      <p class="alb-hint" data-t="album.hint"></p>
+      <nav class="albnav">
+        <button id="albBack" data-sfx="none"></button><span id="albPage" aria-live="off"></span><button id="albNext" data-sfx="none"></button>
+      </nav>
+    </div>
+    <button class="link skip light" data-go="#day" data-t="nav.next"></button>
+  </section>
+
+  <section id="day">
+    <header class="day-head">
+      <h2 id="dayTitle"></h2>
+      <p class="day-sub" data-t="day.sub"></p>
+      <p class="day-note" data-t="day.note"></p>
+    </header>
+    <div class="daymap" id="dayMap">
+      <div class="mapstage" id="mapStage">
+        <svg id="mapSvg" aria-hidden="true" focusable="false"></svg>
+        <div class="pins" id="mapPins" role="group"></div>
+      </div>
+      <article class="ticket" id="ticket" aria-live="polite">
+        <div class="tk-top"><p class="tk-step sans" id="tkStep"></p><button class="tk-x" id="tkClose" type="button">×</button></div>
+        <p class="tk-time"><b id="tkTime"></b><span id="tkProv"></span></p>
+        <h3 id="tkTitle"></h3>
+        <p class="tk-place sans" id="tkPlace"></p>
+        <p class="tk-text" id="tkText"></p>
+        <p class="tk-hint" id="tkHint"></p>
+        <div class="tk-foot">
+          <a class="tk-maps" id="tkMaps" target="_blank" rel="noopener"></a>
+          <nav class="tk-nav"><button class="tk-b" id="tkPrev" type="button"></button><button class="tk-b" id="tkNext" type="button"></button></nav>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<section id="gate" class="screen">
+  <div id="ask" class="ask">
+    <h2 class="hl"><span data-t="gate.pre"></span><em data-t="gate.em"></em></h2>
+    <div class="btns">
+      <span class="slot"><button id="yes" class="btn yes" data-t="gate.yes"></button></span>
+      <span class="slot"><button id="no" class="btn no" data-t="gate.no"></button></span>
+    </div>
+  </div>
+  <div id="word" class="hl" aria-live="polite"><span id="w1"></span><em id="w2"></em></div>
+  <div id="intro" class="intro" hidden>
+    <p class="mono" data-t="intro.eyebrow"></p>
+    <h2 class="hl"><span data-t="intro.title"></span><em data-t="intro.em"></em></h2>
+    <p class="sub" data-t="intro.sub"></p>
+    <button id="enter" class="enter" data-sfx="none"><span data-t="intro.button"></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4.5V12H4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</section>
+
+<div id="popup" class="overlay" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="pq">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+    <svg class="dseal" viewBox="0 0 40 36" aria-hidden="true"><use href="#heart"/></svg>
+    <p id="pq" class="big" data-t="letter.popup.question"></p>
+    <span class="orn" aria-hidden="true"></span>
+    <p id="tease" class="script" aria-live="polite" data-t="letter.popup.hint"></p>
+    <div class="btns">
+      <span class="slot"><button id="pyes" class="btn yes" data-t="letter.popup.yes"></button></span>
+      <span class="slot"><button id="pno" class="btn no" data-t="letter.popup.no"></button></span>
+    </div>
+  </div>
+</div>
+
+<div id="disc" class="reader discview" hidden>
+  <div class="veil"></div>
+  <button id="dclose" class="pillclose sans" data-t="album.close"></button>
+  <div class="scroller">
+    <div class="dstage" id="dstage">
+      <div class="sleeve dsleeve" id="dsleeve"><span class="q">?</span></div>
+      <div class="ddisc" id="ddisc"><span class="spin"><img id="dimg" alt=""><i class="hole"></i></span></div>
+      <aside class="dnote" id="dnote"><p class="sans eyebrow" id="dnum"></p><h3 id="dtitle"></h3><p id="dtext"></p></aside>
+    </div>
+  </div>
+</div>
+
+<div id="reader" class="reader" hidden>
+  <div class="veil"></div>
+  <div class="scroller">
+    <div class="wrap">
+      <div class="sheet" id="sheet">
+      <i class="rim" id="rim"></i>
+      <article class="letter" id="letterSheet">
+        <button id="close" class="close sans" data-t="letter.close"></button>
+        <p class="eyebrow sans" data-rv data-t="letter.eyebrow"></p>
+        <h2 data-rv data-t="letter.title"></h2>
+        <div class="rule" data-rv aria-hidden="true"><svg viewBox="0 0 40 36"><use href="#heart"/></svg></div>
+        <button id="listen" class="listen" data-rv type="button"><i><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 1.2L8.6 5 2.5 8.8z"/></svg></i><span data-t="letter.listen"></span></button>
+        <div class="meta" data-rv>
+          <div class="fields">
+            <p><span class="sans" data-t="letter.toLabel"></span><b data-t="letter.to"></b></p>
+            <p><span class="sans" data-t="letter.fromLabel"></span><b data-t="letter.from"></b></p>
+            <p><span class="sans" data-t="letter.dateLabel"></span><b class="d" data-t="letter.date"></b></p>
+          </div>
+          <div class="stamps" id="stamps">
+            <svg class="postmark" viewBox="0 0 120 80" aria-hidden="true"><defs><path id="pmArc" d="M18,40 a28,28 0 1,1 56,0"/></defs><circle cx="46" cy="40" r="34" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="46" cy="40" r="26" fill="none" stroke="currentColor" stroke-width=".8"/><text font-size="8" letter-spacing="1.6" fill="currentColor" font-family="Hanken Grotesk"><textPath href="#pmArc" startOffset="50%" text-anchor="middle" id="pmText"></textPath></text><text x="46" y="48" font-size="11" text-anchor="middle" fill="currentColor" font-family="Instrument Serif" id="pmYear"></text><path d="M82 24 q8-5 16 0 t16 0 M82 36 q8-5 16 0 t16 0 M82 48 q8-5 16 0 t16 0" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+          </div>
+        </div>
+        <p class="script greet" data-rv data-t="letter.greeting"></p>
+        <div class="body" id="letterBody"></div>
+        <p class="ps" data-rv data-t="letter.ps"></p>
+        <p class="script sign" data-rv data-t="letter.signature"></p>
+        <svg class="flourish" viewBox="0 0 160 14" aria-hidden="true"><path d="M2 9 C30 2 60 14 90 7 S140 4 158 8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <svg class="stamp" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="circ" d="M50,50 m-33,0 a33,33 0 1,1 66,0 a33,33 0 1,1 -66,0"/></defs><circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="1 3.2"/><circle cx="50" cy="50" r="24" fill="currentColor"/><text font-size="10.5" letter-spacing="2.4" fill="currentColor" font-family="Hanken Grotesk"><textPath href="#circ" id="stampText"></textPath></text><path d="M50 60 L40 50 a5 5 0 0 1 10-6 a5 5 0 0 1 10 6z" fill="#faf3e3"/></svg>
+      </article>
+      <img class="wax" id="waxSeal" alt="">
+      </div>
+  
+  </div>
+</div>
+
+      <div class="apl" id="apl" role="group" aria-labelledby="aplTitle" hidden>
+    <img class="apl-cover" id="aplCover" alt="">
+    <div class="apl-main">
+      <div class="apl-head">
+        <div><b id="aplTitle"></b><small id="aplSub"></small></div>
+        <button id="aplX" class="apl-x" type="button" data-sfx="none"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg></button>
+      </div>
+      <input id="aplBar" class="apl-bar" type="range" min="0" max="1000" value="0">
+      <div class="apl-time"><span id="aplCur">0:00</span><span id="aplLeft">-0:00</span></div>
+      <div class="apl-ctl">
+        <button id="aplBack" type="button" data-sfx="none"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><text x="12" y="16.4" font-size="7.2" font-family="DM Sans,sans-serif" text-anchor="middle" fill="currentColor">10</text></svg></button>
+        <button id="aplPlay" class="apl-play" type="button" data-sfx="none"><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z" fill="currentColor"/></svg></button>
+        <button id="aplFwd" type="button" data-sfx="none"><svg viewBox="0 0 24 24" aria-hidden="true" style="transform:scaleX(-1)"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><b style="position:absolute;font:500 .62rem var(--sans)">10</b></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="audio-ctl">
+  <button id="music" data-sfx="none" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 17V5.5l10-2V15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="6.8" cy="17.2" r="2.6" fill="currentColor"/><circle cx="16.8" cy="15.2" r="2.6" fill="currentColor"/><path class="x" d="M3.5 3.5l17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+  <button id="mute" data-sfx="none" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="w" d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="x" d="M16.5 9.5l5 5M21.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+</div>
+
+<script src="js/content.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

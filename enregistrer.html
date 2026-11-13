@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enregistrer les voix</title>
+<style>body{font-family:Georgia,serif;background:#faf3e3;color:#2a1a16;max-width:640px;margin:2rem auto;padding:0 1rem}h1{font-weight:400;color:#8a1414}
+.row{border:1px solid #8a1414;border-radius:18px;padding:1rem;margin:1rem 0}.row p{font-size:1.4rem;font-style:italic;margin:.2rem 0 .8rem}
+button,a.dl{font:inherit;border:1px solid #8a1414;background:#8a1414;color:#faf3e3;border-radius:999px;padding:.4rem 1.2rem;cursor:pointer;text-decoration:none;display:inline-block;margin:.2rem .3rem .2rem 0}
+button.o{background:none;color:#8a1414}audio{display:block;margin-top:.6rem;width:100%}small{color:#7a6a64}</style></head>
+<body><h1>Enregistrer les voix</h1>
+<p><small>Pour chaque phrase : Enregistrer, parle, Arrêter, écoute, puis Télécharger. Place les fichiers téléchargés dans <b>assets/audio/</b> (le site gère .webm, .m4a, .ogg et .mp3). Ouvre cette page depuis le site en ligne (https) ou en local pour autoriser le micro.</small></p>
+<div id="rows"></div>
+<script src="js/content.js"></script>
+<script>
+const rows=document.getElementById('rows');
+CONTENT.words.list.forEach((it,i)=>{
+  const base=it.audio.replace(/^.*\//,'').replace(/\.\w+$/,''); const d=document.createElement('div'); d.className='row';
+  d.innerHTML=`<p>${it.text}</p><button class="rec">Enregistrer</button><button class="o stop" disabled>Arrêter</button><span class="dlw"></span><audio controls hidden></audio>`;
+  rows.append(d); let mr,chunks=[];
+  const rec=d.querySelector('.rec'),stop=d.querySelector('.stop'),au=d.querySelector('audio');
+  rec.onclick=async()=>{try{const s=await navigator.mediaDevices.getUserMedia({audio:true});mr=new MediaRecorder(s);chunks=[];
+    mr.ondataavailable=e=>chunks.push(e.data);
+    mr.onstop=()=>{s.getTracks().forEach(t=>t.stop());const type=mr.mimeType||'audio/webm';const ext=type.includes('mp4')?'m4a':type.includes('ogg')?'ogg':'webm';
+      const blob=new Blob(chunks,{type});au.src=URL.createObjectURL(blob);au.hidden=false;
+      d.querySelector('.dlw').innerHTML=`<a class="dl" download="${base}.${ext}" href="${au.src}">Télécharger ${base}.${ext}</a>`;};
+    mr.start();rec.disabled=true;stop.disabled=false;}catch(e){alert('Micro indisponible : '+e.message)}};
+  stop.onclick=()=>{mr.stop();rec.disabled=false;stop.disabled=true};
+});
+</script></body></html>
