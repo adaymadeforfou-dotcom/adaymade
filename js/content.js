@@ -61,7 +61,7 @@ window.CONTENT = {
     hints: { channel: "Change de chaîne", power: "Allume / éteins", delay: 1500, duration: 5000 },
     slides: [
       { video: "assets/video/tryphene.mp4" },
-      { text: "Samedi." },
+      { text: "le 14 novembre." },
       { text: "Rien à prévoir." },
       // { video: "assets/video/teaser.mp4", text: "Juste me suivre." },
       { text: "Juste me suivre." }
