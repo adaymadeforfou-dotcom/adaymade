@@ -124,11 +124,42 @@ window.CONTENT = {
     title: "Quelques chaînes, rien que pour toi",
     hint: "Allume la télé.",
     slides: [
-      { image: "assets/img/tv-1.jpg", alt: "Souvenir 1", caption: "Légende du premier souvenir" },
-      { text: "Chaîne 1", caption: "Bienvenue." },
-      { image: "assets/img/tv-1.jpg", alt: "Souvenir 1", caption: "Légende du premier souvenir" },
-      { image: "assets/img/tv-2.jpg", alt: "Souvenir 2", caption: "Légende du deuxième souvenir" },
-      { text: "Tu me manques même quand tu es là.", caption: "Chaîne 4" }
+      { text: "GRrrrrrrr", caption: "Bienvenue." },
+      { text: "Ce sourire illumine ma journée. Ton bonheur est contagieux !", caption: "Bienvenue." },
+      { image: "assets/img/01 (1).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+      
+
+      { text: "Avec toi, chaque instant c'est une nouvelle aventure presque. Je t'aime !", caption: "Bienvenue." },
+      { image: "assets/img/01 (2).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+      
+
+      { text: "Dans tes bras, je me sens en sécurité et aimée.", caption: "Bienvenue." },
+      { image: "assets/img/01 (3).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+
+      { text: "À tes côtés, la vie est plus belle. Tu es la personne que je veux voir chaque jour.", caption: "Bienvenue." },
+      { image: "assets/img/01 (4).jpeg", alt: "Souvenir 1", caption: "Bienvenue" },
+
+      { text: "Ton regard sur moi me fait fondre. Je suis folle de toi.", caption: "Bienvenue." },
+      { image: "assets/img/01 (5).jpeg", alt: "Souvenir 5", caption: "Bienvenue" },
+
+      { text: "Ton énergie me captive. Je ne me lasse jamais d'être avec toi.", caption: "Bienvenue." },
+      { image: "assets/img/01 (6).jpeg", alt: "Souvenir 6", caption: "Bienvenue" },
+
+      { text: "Sous le ciel étoilé ou le soleil radieux, je suis heureuse avec toi.", caption: "Bienvenue." },
+      { image: "assets/img/01 (7).jpeg", alt: "Souvenir 7", caption: "Bienvenue" },
+
+      // { text: "Toujours aussi complices ! Ton humour me fait toujours sourire.", caption: "Bienvenue." },
+      // { image: "assets/img/01 (9).jpeg", alt: "Souvenir 8", caption: "Bienvenue" },
+
+      // { text: "Notre amour est une fête de tous les jours. Je suis si chanceuse de t'avoir.", caption: "Bienvenue." },
+      // { image: "assets/img/01 (10).jpeg", alt: "Souvenir 9", caption: "Bienvenue" },
+
+      { text: "Ensemble, nous formons une équipe imbattable. Prêts à affronter le monde ?", caption: "Bienvenue." },
+      { image: "assets/img/01 (11).jpeg", alt: "Souvenir 10", caption: "Bienvenue" },
+
+      // { image: "assets/img/tv-1.jpg", alt: "Souvenir 1", caption: "Bienvenue" },
+      // { image: "assets/img/tv-2.jpg", alt: "Souvenir 2", caption: "Légende du deuxième souvenir" },
+      // { text: "Tu me manques même quand tu es là.", caption: "Chaîne 4" }
     ]
   },
 
