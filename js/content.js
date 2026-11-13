@@ -6,8 +6,8 @@ window.CONTENT = {
   music: {
     src: "assets/audio/musique.mp3",   // remplace ce fichier pour changer la musique
     volume: .5,                         // volume de base (0 à 1)
-    duck: .06,                          // musique très basse pendant les voix de l'entrée et les vidéos des télés
-    duckLetter: .35,                    // musique en fond pendant l'audio de la lettre (la voix reste bien au-dessus, ~15 dB)
+    duck: .03,                          // musique à ~3 % de son volume pendant les voix de l'entrée et les vidéos des télés
+    duckLetter: .03,                    // musique à ~3 % pendant l'audio de la lettre (la voix, elle, reste à 100 %)
     on: "Couper la musique", off: "Lancer la musique"
   },
 
@@ -61,7 +61,7 @@ window.CONTENT = {
     hints: { channel: "Change de chaîne", power: "Allume / éteins", delay: 1500, duration: 5000 },
     slides: [
       { video: "assets/video/tryphene.mp4" },
-      { text: "le 14 novembre." },
+      { text: "Samedi." },
       { text: "Rien à prévoir." },
       // { video: "assets/video/teaser.mp4", text: "Juste me suivre." },
       { text: "Juste me suivre." }

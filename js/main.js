@@ -54,7 +54,7 @@ function sfx(n) {
 }
 const setGain = () => {
   if (master) master.gain.value = muted ? 0 : VOLS[vi];
-  if (voice) { voice.muted = muted; voice.volume = VOLS[vi]; }
+  if (voice) { voice.muted = muted; voice.volume = voice._full ? 1 : VOLS[vi]; }   // la lettre audio reste à 100 %, indépendante du bouton volume des télés
   vids.forEach(v => { v.muted = muted || letterOn; v.volume = VOLS[vi]; });
   knobsV.forEach(k => k.style.transform = `rotate(${vi * 40}deg)`);
 };
@@ -64,18 +64,38 @@ document.addEventListener('click', e => { const b = e.target.closest('button'); 
 /* musique d'ambiance (fondu doux, baisse pendant les voix) */
 const M = C.music, mus = new Audio(M.src); mus.loop = true; mus.volume = 0; mus.preload = 'auto';
 let started = false;
-function startMusic() { if (musicOn) mus.play().catch(() => {}); }
-['pointerdown', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { if (started && musicOn && mus.paused) startMusic(); }, { passive: true }));
+/* iPhone/iPad : le volume d'un <audio> est ignoré (toujours 100 %), donc la musique ne baissait jamais sur mobile.
+   Dans ce cas on la fait passer par un réglage de volume Web Audio (GainNode). Si ça échoue, on la met en pause pendant les voix. */
+const volOk = (() => { try { const t = new Audio(); t.volume = .5; return t.volume === .5; } catch (e) { return true; } })();
+let musGain = null, musTried = false;
+function hookMusic() {
+  if (volOk || musTried) return; musTried = true;
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}   // reste audible même en mode silencieux
+  const c = ac(); if (!c) return;
+  try { const src = c.createMediaElementSource(mus); musGain = c.createGain(); musGain.gain.value = 0; src.connect(musGain); musGain.connect(c.destination); } catch (e) { musGain = null; }
+}
+function playMusic() { hookMusic(); mus.play().catch(() => {}); }
+function startMusic() { if (musicOn) playMusic(); }
+['pointerdown', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { if (started && musicOn && mus.paused) startMusic(); if (musGain && ctx && ctx.state !== 'running') ctx.resume(); }, { passive: true }));
 let musicOn = true, cur = 0;
 const target = () => muted || !musicOn ? 0 : M.volume * VOLS[vi] * duckers.factor();
-setInterval(() => { const t = target(); cur += (t - cur) * .1; if (Math.abs(t - cur) < .002) cur = t; try { mus.volume = Math.min(1, cur); } catch (e) {} if (cur === 0 && !musicOn && !mus.paused) mus.pause(); }, 60);
+setInterval(() => {
+  const t = target(); cur += (t - cur) * .1; if (Math.abs(t - cur) < .002) cur = t; const v = Math.min(1, cur);
+  if (musGain) musGain.gain.value = v;
+  else if (volOk) { try { mus.volume = v; } catch (e) {} }
+  else if (started && musicOn) {   // secours (mobile sans Web Audio) : pause pendant les voix et vidéos, reprise après
+    const quiet = muted || duckers.factor() < .5;
+    if (quiet && !mus.paused) mus.pause(); else if (!quiet && mus.paused) mus.play().catch(() => {});
+  }
+  if (cur === 0 && !musicOn && !mus.paused) mus.pause();
+}, 60);
 const mute = $('#mute'), music = $('#music');
 const paint = () => {
   mute.setAttribute('aria-pressed', muted); mute.setAttribute('aria-label', muted ? C.mute.off : C.mute.on); mute.title = mute.getAttribute('aria-label');
   music.setAttribute('aria-pressed', musicOn); music.setAttribute('aria-label', musicOn ? M.on : M.off); music.title = music.getAttribute('aria-label');
 };
 mute.onclick = () => { muted = !muted; setGain(); paint(); if (!muted) sfx('click'); };
-music.onclick = () => { musicOn = !musicOn; if (musicOn) mus.play().catch(() => {}); paint(); sfx('click'); };
+music.onclick = () => { musicOn = !musicOn; if (musicOn) playMusic(); paint(); sfx('click'); };
 paint();
 
 /* ================= NON qui fuit ================= */
@@ -127,15 +147,17 @@ function initTv(fig, cfg, { auto = 0, onPower, hints } = {}) {
     scr.append(d); return d;
   });
   const stat = document.createElement('div'); stat.className = 'static'; scr.append(stat);
-  let on = false, idx = 0, timer, rotC = 0;
+  let on = false, idx = 0, timer, rotC = 0, away = false;
   const flash = () => { stat.classList.remove('go'); void stat.offsetWidth; stat.classList.add('go'); };
   function schedule() {   // enchaîne tout seul : une vidéo va jusqu'au bout, les autres chaînes durent `duration` ou `auto`
-    clearTimeout(timer); if (!auto || !on) return;
+    clearTimeout(timer); if (!auto || !on || away) return;
     const el = slides[idx], v = el.querySelector('video'), s = cfg[idx];
     if (v && !el.classList.contains('nofile') && !s.duration) { v.onended = () => channel(true); timer = setTimeout(() => channel(true), 240000); }
     else timer = setTimeout(() => channel(true), s.duration || auto);
   }
-  const show = i => { slides.forEach((s, k) => { s.classList.toggle('on', k === i); const v = s.querySelector('video'); if (v) { if (k === i) { v.currentTime = 0; v.muted = muted || letterOn; v.play().catch(() => {}); } else v.pause(); } }); schedule(); };
+  const show = i => { slides.forEach((s, k) => { s.classList.toggle('on', k === i); const v = s.querySelector('video'); if (v) { if (k === i && !away) { v.currentTime = 0; v.muted = muted || letterOn; v.play().catch(() => {}); } else v.pause(); } }); schedule(); };
+  /* section quittée : la vidéo se met en pause (plus aucun son) ; au retour, la chaîne en cours repart */
+  function setAway(a) { if (a === away) return; away = a; if (a) { clearTimeout(timer); slides.forEach(s => { const v = s.querySelector('video'); v && v.pause(); }); } else if (on) show(idx); }
   function setPower(v) {
     on = v; pw.classList.toggle('on', on); pw.setAttribute('aria-pressed', on); sfx(on ? 'power' : 'off');
     if (on) { scr.classList.add('on'); flash(); setTimeout(() => on && show(idx), 500); }
@@ -156,7 +178,7 @@ function initTv(fig, cfg, { auto = 0, onPower, hints } = {}) {
   pw.onclick = () => setPower(!on);
   kc.onclick = () => { rotC += 50; kc.style.transform = `rotate(${rotC}deg)`; on ? channel(false) : sfx('knob'); };
   kv.onclick = () => { vi = (vi + 1) % VOLS.length; setGain(); sfx('knob'); };
-  return { setPower, showHints, hideHints };
+  return { setPower, showHints, hideHints, setAway };
 }
 C.hero.phrase.forEach(p => { const s = document.createElement('span'); s.textContent = p.t; if (p.s === 'script') s.className = 'script'; $('#heroPhrase').append(s); });
 const heroTv = initTv($('[data-tv=hero]'), C.hero.slides, { auto: T.slideDuration, hints: C.hero.hints });
@@ -283,7 +305,7 @@ async function openPlayer() {
   if (first) { try { await first.p; a = first.a; } catch (e) { a = await playVoice(L.voice); } }   // sinon on essaie les autres formats (.ogg, .opus…)
   if (!a) { $('#aplSub').textContent = P.missing; return; }
   if (letterClosing || !apl.classList.contains('show')) { a.pause(); return; }
-  la = a; voice = a;
+  la = a; voice = a; a._full = true; a.volume = 1; a.muted = muted;
   a.addEventListener('timeupdate', paintPlayer); a.addEventListener('loadedmetadata', paintPlayer); a.addEventListener('durationchange', paintPlayer);
   a.addEventListener('play', () => !a._swap && setPlaying(true)); a.addEventListener('pause', () => !a._swap && setPlaying(false));
   a.addEventListener('ended', () => { setPlaying(false); if (L.autoCloseAfterVoice !== false) setTimeout(() => { if (la === a && a.ended && reader.classList.contains('show')) closeLetter(); }, L.autoCloseDelay ?? 2500); });
@@ -395,6 +417,30 @@ $('#dclose').onclick = closeDisc;
 $('#disc .scroller').addEventListener('click', e => { if (e.target.closest('.dsleeve,.ddisc,.dnote') || String(getSelection()).length) return; closeDisc(); });
 $('#reader .scroller').addEventListener('click', e => { if (e.target.closest('.sheet,.apl') || String(getSelection()).length) return; closeLetter(); });
 addEventListener('keydown', e => { if (e.key === 'Escape') { closeDisc(); closeLetter(); } });
+/* ================= le son reste dans sa section ================= */
+/* Quand on quitte une section, tout ce qui y fait du bruit se tait. Pour ajouter une section sonore plus tard :
+   ajoute-la dans `scopes` avec ce qu'il faut couper (leave) et, si besoin, relancer (enter). */
+const scopes = {
+  hero: { leave: () => heroTv.setAway(true), enter: () => heroTv.setAway(false) },
+  room: { leave: () => roomTv.setAway(true), enter: () => roomTv.setAway(false) },
+  lettre: { leave: () => { if (la && !la.paused) la.pause(); } }
+};
+let curSec = 'hero'; const seenPx = new Map();
+function setSection(id) { if (id === curSec) return; const old = scopes[curSec]; curSec = id; old && old.leave && old.leave(); const nw = scopes[id]; nw && nw.enter && nw.enter(); }
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => seenPx.set(e.target.id, e.intersectionRect.height));   // la section la plus visible à l'écran est la section courante
+    let best = curSec, bv = 0; seenPx.forEach((h, id) => { if (h > bv) { bv = h; best = id; } });
+    if (bv > 0) setSection(best);
+  }, { threshold: Array.from({ length: 21 }, (_, i) => i / 20) });
+  ['hero', 'lettre', 'room', 'album', 'day'].forEach(id => { const el = document.getElementById(id); el && io.observe(el); });
+}
+/* changer d'appli ou verrouiller le téléphone : télés et lettre audio se taisent, et reviennent avec la page */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { heroTv.setAway(true); roomTv.setAway(true); if (la && !la.paused) la.pause(); }
+  else { const nw = scopes[curSec]; nw && nw.enter && nw.enter(); }
+});
+
 /* ================= programme : carte interactive « The Day » ================= */
 (() => {
 const D = C.day, svg = $('#mapSvg'), stage = $('#mapStage'), pinsEl = $('#mapPins'), tk = $('#ticket'), dayEl = $('#day'), N = D.stops.length;
