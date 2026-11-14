@@ -64,12 +64,13 @@ document.addEventListener('click', e => { const b = e.target.closest('button'); 
 /* musique d'ambiance (fondu doux, baisse pendant les voix) */
 const M = C.music, mus = new Audio(M.src); mus.loop = true; mus.volume = 0; mus.preload = 'auto';
 let started = false;
-/* iPhone/iPad : le volume d'un <audio> est ignoré (toujours 100 %), donc la musique ne baissait jamais sur mobile.
-   Dans ce cas on la fait passer par un réglage de volume Web Audio (GainNode). Si ça échoue, on la met en pause pendant les voix. */
+/* Sur mobile, le volume d'un <audio> peut être ignoré : on utilise Web Audio pour baisser la musique.
+   Si ce mixage n'est pas disponible, on met la musique en pause pendant les voix. */
 const volOk = (() => { try { const t = new Audio(); t.volume = .5; return t.volume === .5; } catch (e) { return true; } })();
+const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let musGain = null, musTried = false;
 function hookMusic() {
-  if (volOk || musTried) return; musTried = true;
+  if ((volOk && !mobile) || musTried) return; musTried = true;
   try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}   // reste audible même en mode silencieux
   const c = ac(); if (!c) return;
   try { const src = c.createMediaElementSource(mus); musGain = c.createGain(); musGain.gain.value = 0; src.connect(musGain); musGain.connect(c.destination); } catch (e) { musGain = null; }
@@ -82,8 +83,8 @@ const target = () => muted || !musicOn ? 0 : M.volume * VOLS[vi] * duckers.facto
 setInterval(() => {
   const t = target(); cur += (t - cur) * .1; if (Math.abs(t - cur) < .002) cur = t; const v = Math.min(1, cur);
   if (musGain) musGain.gain.value = v;
-  else if (volOk) { try { mus.volume = v; } catch (e) {} }
-  else if (started && musicOn) {   // secours (mobile sans Web Audio) : pause pendant les voix et vidéos, reprise après
+  else if (volOk && !mobile) { try { mus.volume = v; } catch (e) {} }
+  else if (started && musicOn) {   // secours sans volume réglable : pause pendant les voix et vidéos, reprise après
     const quiet = muted || duckers.factor() < .5;
     if (quiet && !mus.paused) mus.pause(); else if (!quiet && mus.paused) mus.play().catch(() => {});
   }

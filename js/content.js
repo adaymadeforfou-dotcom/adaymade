@@ -61,7 +61,7 @@ window.CONTENT = {
     hints: { channel: "Change de chaîne", power: "Allume / éteins", delay: 1500, duration: 5000 },
     slides: [
       { video: "assets/video/tryphene.mp4" },
-      { text: "Samedi." },
+      { text: "14 novembre." },
       { text: "Rien à prévoir." },
       // { video: "assets/video/teaser.mp4", text: "Juste me suivre." },
       { text: "Juste me suivre." }
@@ -87,7 +87,7 @@ window.CONTENT = {
     ],
     greeting: "Mon amour,",
     body: [
-      "Il y a des jours qu'on garde sans savoir pourquoi. Une lumière, un rire, ta main dans la mienne dans une rue quelconque.",
+      
 
       "J’ai longtemps cherché comment commencer cette lettre. Pas parce que je n’ai rien à te dire, mais parce que, bizarrement, quand il s’agit de parler de ce que je ressens vraiment, les mots décident de me faire faux bond. Alors aujourd’hui, j’ai décidé de les chercher un par un, juste pour toi.",
       
